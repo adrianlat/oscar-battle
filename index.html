@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Oscar Battle · Jerry vs Gerardo</title>
+  <style>
+    :root {
+      --bg: #0f1115;
+      --panel: #171a21;
+      --panel-2: #1f2430;
+      --line: #2d3444;
+      --text: #f3f5f8;
+      --muted: #a7b1c2;
+      --gold: #f6c453;
+      --green: #2dd4a5;
+      --red: #ff6b6b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: radial-gradient(circle at top, #1a1f2b, var(--bg) 50%);
+      color: var(--text);
+    }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 20px; }
+    h1 { margin: 0 0 4px; font-size: 1.6rem; }
+    .sub { color: var(--muted); margin-bottom: 18px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 280px 1fr 280px;
+      gap: 14px;
+      align-items: start;
+    }
+    .panel {
+      background: linear-gradient(180deg, var(--panel), var(--panel-2));
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.25);
+    }
+    .player {
+      text-align: center;
+      position: sticky;
+      top: 12px;
+    }
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 3px solid var(--gold);
+      background: #2a3242;
+      display: block;
+      margin: 0 auto 10px;
+    }
+    .name {
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .score {
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .wins {
+      color: var(--muted);
+      margin-bottom: 12px;
+      font-size: .95rem;
+    }
+    .btn, .file-label {
+      display: inline-block;
+      background: #2a3140;
+      color: var(--text);
+      border: 1px solid #3a4356;
+      border-radius: 10px;
+      padding: 8px 10px;
+      font-size: .9rem;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    input[type="file"] { display: none; }
+
+    .board-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .badge {
+      background: rgba(246,196,83,.14);
+      color: #ffd980;
+      border: 1px solid rgba(246,196,83,.35);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: .83rem;
+    }
+
+    .category {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 10px;
+      background: rgba(255,255,255,.02);
+    }
+    .cat-title {
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 160px;
+      gap: 8px;
+      margin: 6px 0;
+      align-items: center;
+    }
+    select, input[type="text"], textarea {
+      width: 100%;
+      background: #11161f;
+      color: var(--text);
+      border: 1px solid #2f3850;
+      border-radius: 9px;
+      padding: 8px;
+      font-size: .92rem;
+    }
+    .result-line {
+      margin-top: 8px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+    .result-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .chip {
+      border: 1px solid #44506a;
+      background: #232a39;
+      color: var(--text);
+      padding: 6px 9px;
+      border-radius: 999px;
+      font-size: .82rem;
+      cursor: pointer;
+    }
+    .chip.active { border-color: var(--gold); background: #3c3320; }
+    .legend { color: var(--muted); font-size: .85rem; }
+
+    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+    .btn-primary { background: #3a2f11; border-color: #6b5420; color: #ffd980; }
+    .btn-danger { background: #3a1f23; border-color: #6a2d35; color: #ffb7bf; }
+
+    .footer {
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 10px;
+      background: #121825;
+      border: 1px solid #2a3550;
+      color: var(--muted);
+      font-size: .9rem;
+    }
+
+    @media (max-width: 980px) {
+      .grid { grid-template-columns: 1fr; }
+      .player { position: static; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>🏆 Oscar Battle</h1>
+    <div class="sub">Competencia rápida para votar y marcar ganadores en vivo.</div>
+
+    <div class="grid">
+      <section class="panel player" id="leftPanel">
+        <img class="avatar" id="leftAvatar" alt="Foto jugador izquierda" src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=400&q=80&auto=format&fit=crop" />
+        <div class="name" id="leftName">Jerry</div>
+        <div class="score" id="leftScore">0</div>
+        <div class="wins">Aciertos: <strong id="leftWins">0</strong></div>
+        <label class="file-label">Cambiar foto<input type="file" accept="image/*" id="leftPhotoInput"></label>
+      </section>
+
+      <section class="panel">
+        <div class="board-head">
+          <div class="badge">Centro: premios + nominados + ganador real</div>
+          <div class="legend" id="statusLegend">Sin resultados todavía</div>
+        </div>
+
+        <div class="toolbar">
+          <button class="btn btn-primary" id="addCategoryBtn">+ Agregar premio</button>
+          <button class="btn" id="saveBtn">Guardar local</button>
+          <button class="btn" id="loadBtn">Cargar local</button>
+          <button class="btn btn-danger" id="resetBtn">Reset</button>
+        </div>
+
+        <div id="categories"></div>
+
+        <div class="footer">
+          Tip: cada premio suma 1 punto al que acierte. Puedes marcar “Nadie ganó” cuando ambos fallen.
+        </div>
+      </section>
+
+      <section class="panel player" id="rightPanel">
+        <img class="avatar" id="rightAvatar" alt="Foto jugador derecha" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80&auto=format&fit=crop" />
+        <div class="name" id="rightName">Gerardo</div>
+        <div class="score" id="rightScore">0</div>
+        <div class="wins">Aciertos: <strong id="rightWins">0</strong></div>
+        <label class="file-label">Cambiar foto<input type="file" accept="image/*" id="rightPhotoInput"></label>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const STORAGE_KEY = 'oscar-battle-v1';
+
+    const state = {
+      left: { name: 'Jerry', photo: null },
+      right: { name: 'Gerardo', photo: null },
+      categories: [
+        {
+          title: 'Mejor Película',
+          nominees: ['Anora', 'The Brutalist', 'Conclave', 'Dune: Part Two', 'Wicked'],
+          leftPick: '',
+          rightPick: '',
+          winner: ''
+        },
+        {
+          title: 'Mejor Dirección',
+          nominees: ['Sean Baker', 'Brady Corbet', 'Jacques Audiard', 'Coralie Fargeat', 'James Mangold'],
+          leftPick: '',
+          rightPick: '',
+          winner: ''
+        }
+      ]
+    };
+
+    const el = {
+      categories: document.getElementById('categories'),
+      leftName: document.getElementById('leftName'),
+      rightName: document.getElementById('rightName'),
+      leftScore: document.getElementById('leftScore'),
+      rightScore: document.getElementById('rightScore'),
+      leftWins: document.getElementById('leftWins'),
+      rightWins: document.getElementById('rightWins'),
+      leftAvatar: document.getElementById('leftAvatar'),
+      rightAvatar: document.getElementById('rightAvatar'),
+      leftPhotoInput: document.getElementById('leftPhotoInput'),
+      rightPhotoInput: document.getElementById('rightPhotoInput'),
+      statusLegend: document.getElementById('statusLegend')
+    };
+
+    function createOption(value, selectedValue) {
+      return `<option value="${escapeHtml(value)}" ${value === selectedValue ? 'selected' : ''}>${escapeHtml(value)}</option>`;
+    }
+
+    function render() {
+      el.leftName.textContent = state.left.name;
+      el.rightName.textContent = state.right.name;
+      if (state.left.photo) el.leftAvatar.src = state.left.photo;
+      if (state.right.photo) el.rightAvatar.src = state.right.photo;
+
+      el.categories.innerHTML = state.categories.map((cat, i) => {
+        const options = [''].concat(cat.nominees).map(n => createOption(n, cat.leftPick)).join('');
+        const rightOptions = [''].concat(cat.nominees).map(n => createOption(n, cat.rightPick)).join('');
+        const winnerButtons = cat.nominees.map(n => `
+          <button class="chip ${cat.winner === n ? 'active' : ''}" data-action="winner" data-i="${i}" data-val="${escapeHtmlAttr(n)}">${escapeHtml(n)}</button>
+        `).join('');
+
+        return `
+        <article class="category">
+          <div class="cat-title" contenteditable="true" data-action="title" data-i="${i}">${escapeHtml(cat.title)}</div>
+
+          <div class="row">
+            <label>Voto ${escapeHtml(state.left.name)}</label>
+            <select data-action="leftPick" data-i="${i}">
+              <option value="">— elegir —</option>
+              ${options}
+            </select>
+          </div>
+
+          <div class="row">
+            <label>Voto ${escapeHtml(state.right.name)}</label>
+            <select data-action="rightPick" data-i="${i}">
+              <option value="">— elegir —</option>
+              ${rightOptions}
+            </select>
+          </div>
+
+          <div class="result-line">
+            <div class="legend">Ganador real:</div>
+            <div class="result-buttons">
+              ${winnerButtons}
+              <button class="chip ${cat.winner === 'NINGUNO' ? 'active' : ''}" data-action="winner" data-i="${i}" data-val="NINGUNO">Nadie ganó</button>
+              <button class="chip" data-action="clearWinner" data-i="${i}">Limpiar</button>
+              <button class="chip" data-action="addNominee" data-i="${i}">+ Nominado</button>
+              <button class="chip" data-action="removeCategory" data-i="${i}">🗑 Premio</button>
+            </div>
+          </div>
+        </article>`;
+      }).join('');
+
+      computeScores();
+      wireDynamicEvents();
+    }
+
+    function wireDynamicEvents() {
+      document.querySelectorAll('[data-action="leftPick"]').forEach(sel => {
+        sel.addEventListener('change', e => {
+          const i = +e.target.dataset.i;
+          state.categories[i].leftPick = e.target.value;
+          computeScores();
+        });
+      });
+      document.querySelectorAll('[data-action="rightPick"]').forEach(sel => {
+        sel.addEventListener('change', e => {
+          const i = +e.target.dataset.i;
+          state.categories[i].rightPick = e.target.value;
+          computeScores();
+        });
+      });
+      document.querySelectorAll('[data-action="winner"]').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const i = +e.target.dataset.i;
+          state.categories[i].winner = e.target.dataset.val;
+          render();
+        });
+      });
+      document.querySelectorAll('[data-action="clearWinner"]').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const i = +e.target.dataset.i;
+          state.categories[i].winner = '';
+          render();
+        });
+      });
+      document.querySelectorAll('[data-action="addNominee"]').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const i = +e.target.dataset.i;
+          const name = prompt('Nombre del nuevo nominado:');
+          if (!name) return;
+          if (!state.categories[i].nominees.includes(name)) state.categories[i].nominees.push(name);
+          render();
+        });
+      });
+      document.querySelectorAll('[data-action="removeCategory"]').forEach(btn => {
+        btn.addEventListener('click', e => {
+          const i = +e.target.dataset.i;
+          if (confirm('¿Borrar este premio?')) {
+            state.categories.splice(i, 1);
+            render();
+          }
+        });
+      });
+      document.querySelectorAll('[data-action="title"]').forEach(titleEl => {
+        titleEl.addEventListener('blur', e => {
+          const i = +e.target.dataset.i;
+          const txt = e.target.textContent.trim();
+          state.categories[i].title = txt || `Premio ${i + 1}`;
+        });
+      });
+    }
+
+    function computeScores() {
+      let left = 0, right = 0, resolved = 0;
+      for (const cat of state.categories) {
+        if (!cat.winner) continue;
+        resolved++;
+        if (cat.winner !== 'NINGUNO') {
+          if (cat.leftPick === cat.winner) left++;
+          if (cat.rightPick === cat.winner) right++;
+        }
+      }
+      el.leftScore.textContent = left;
+      el.rightScore.textContent = right;
+      el.leftWins.textContent = left;
+      el.rightWins.textContent = right;
+      const total = state.categories.length;
+      el.statusLegend.textContent = `Resultados marcados: ${resolved}/${total}`;
+    }
+
+    function readImage(file, cb) {
+      const reader = new FileReader();
+      reader.onload = () => cb(reader.result);
+      reader.readAsDataURL(file);
+    }
+
+    function saveLocal() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      alert('Guardado local ✅');
+    }
+
+    function loadLocal() {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (!raw) return alert('No hay guardado local todavía.');
+      try {
+        const data = JSON.parse(raw);
+        Object.assign(state, data);
+        render();
+        alert('Cargado ✅');
+      } catch {
+        alert('No se pudo cargar.');
+      }
+    }
+
+    function resetAll() {
+      if (!confirm('¿Reset total?')) return;
+      localStorage.removeItem(STORAGE_KEY);
+      location.reload();
+    }
+
+    function escapeHtml(str = '') {
+      return str.replace(/[&<>"']/g, ch => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[ch]));
+    }
+
+    function escapeHtmlAttr(str = '') {
+      return String(str).replace(/"/g, '&quot;');
+    }
+
+    document.getElementById('addCategoryBtn').addEventListener('click', () => {
+      state.categories.push({ title: `Premio ${state.categories.length + 1}`, nominees: ['Nominado A', 'Nominado B'], leftPick: '', rightPick: '', winner: '' });
+      render();
+    });
+    document.getElementById('saveBtn').addEventListener('click', saveLocal);
+    document.getElementById('loadBtn').addEventListener('click', loadLocal);
+    document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+    el.leftPhotoInput.addEventListener('change', e => {
+      const f = e.target.files?.[0];
+      if (!f) return;
+      readImage(f, data => { state.left.photo = data; el.leftAvatar.src = data; });
+    });
+    el.rightPhotoInput.addEventListener('change', e => {
+      const f = e.target.files?.[0];
+      if (!f) return;
+      readImage(f, data => { state.right.photo = data; el.rightAvatar.src = data; });
+    });
+
+    // Editable names by double click
+    document.getElementById('leftPanel').addEventListener('dblclick', () => {
+      const n = prompt('Nombre jugador izquierda:', state.left.name);
+      if (n) { state.left.name = n.trim(); render(); }
+    });
+    document.getElementById('rightPanel').addEventListener('dblclick', () => {
+      const n = prompt('Nombre jugador derecha:', state.right.name);
+      if (n) { state.right.name = n.trim(); render(); }
+    });
+
+    render();
+  </script>
+</body>
+</html>
