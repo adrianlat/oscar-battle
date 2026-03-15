@@ -165,8 +165,16 @@ function score(){let j=0,g=0,r=0;state.categories.forEach(c=>{if(!c.winner)retur
 function esc(s=''){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function escA(s=''){return s.replace(/"/g,'&quot;')}
 $('save').onclick=()=>{localStorage.setItem(KEY,JSON.stringify(state));alert('Guardado ✅')}
-$('load').onclick=()=>{const raw=localStorage.getItem(KEY);if(!raw)return alert('No hay guardado');const d=JSON.parse(raw);state.categories=d.categories||state.categories;render()}
+function sortCategories(){
+  state.categories.sort((a,b)=>{
+    const ia = ORDER.indexOf(a.title);
+    const ib = ORDER.indexOf(b.title);
+    return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+  });
+}
+$('load').onclick=()=>{const raw=localStorage.getItem(KEY);if(!raw)return alert('No hay guardado');const d=JSON.parse(raw);state.categories=d.categories||state.categories;sortCategories();render()}
 $('reset').onclick=()=>{if(confirm('¿Reset total?')){localStorage.removeItem(KEY);location.reload()}}
+sortCategories();
 render();
 </script>
 </body>
