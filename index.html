@@ -5,173 +5,119 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Oscar Battle · Jerry vs Gerardo</title>
   <style>
-    :root{--bg:#0e0f14;--card:#171a22;--line:#2c3242;--txt:#f4f6fb;--muted:#9ca8be;--gold:#f6c453}
-    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui;background:radial-gradient(circle at top,#1c2230,var(--bg) 55%);color:var(--txt)}
-    .wrap{max-width:1250px;margin:0 auto;padding:18px}
-    .grid{display:grid;grid-template-columns:260px 1fr 260px;gap:12px}
-    .panel{background:linear-gradient(180deg,#171b24,#1b2130);border:1px solid var(--line);border-radius:14px;padding:12px}
-    .player{text-align:center;position:sticky;top:10px}
-        .name{font-weight:800}.score{font-size:2rem;color:var(--gold);font-weight:900}.muted{color:var(--muted);font-size:.9rem}
-    .boardTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-    .badge{font-size:.82rem;padding:5px 10px;border-radius:999px;border:1px solid #655126;background:#3f3214;color:#ffd980}
-    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-    button,.btn{background:#293246;border:1px solid #44506d;color:#fff;border-radius:10px;padding:7px 10px;cursor:pointer}
-    .cat{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px;background:rgba(255,255,255,.02)}
-    .cat h3{margin:0 0 8px;font-size:1rem}
-    .nominees{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:8px}
-    .nom{background:#121825;border:1px solid #2b3448;border-radius:10px;overflow:hidden}
-    .nom img{width:100%;height:150px;object-fit:cover;background:#263047}
-    .nom .t{padding:6px;font-size:.78rem;line-height:1.25;color:#dce4f2;min-height:48px}
-    .row{display:grid;grid-template-columns:1fr 160px;gap:8px;align-items:center;margin:6px 0}
-    select{width:100%;background:#0f1420;color:#fff;border:1px solid #394560;border-radius:8px;padding:7px}
-    .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}.chip{font-size:.8rem;border-radius:999px;padding:5px 9px}.active{border-color:#8f7130;background:#4b3f21;color:#ffe2a6}
-    @media (max-width:980px){.grid{grid-template-columns:1fr}.player{position:static}}
+    :root{--bg:#0c0f14;--panel:#171d29;--line:#2c3550;--txt:#f6f8fc;--muted:#99a8c5;--gold:#f6c453;--j:#5ab0ff;--g:#f28cc8;--ok:#2dd4a5}
+    *{box-sizing:border-box} body{margin:0;background:radial-gradient(circle at top,#1c2233,var(--bg) 55%);color:var(--txt);font-family:Inter,system-ui,-apple-system}
+    .wrap{max-width:1300px;margin:0 auto;padding:14px}
+    .layout{display:grid;grid-template-columns:280px 1fr;gap:12px}
+    .panel{background:linear-gradient(180deg,#1a2030,#171d29);border:1px solid var(--line);border-radius:14px;padding:12px}
+    .score{position:sticky;top:10px;height:fit-content}
+    .score h2{margin:0 0 8px;font-size:1.05rem}
+    .who{display:grid;grid-template-columns:1fr auto;gap:6px;padding:9px;border:1px solid var(--line);border-radius:10px;margin-bottom:8px}
+    .who .name{font-weight:800}.pts{font-size:1.6rem;font-weight:900;color:var(--gold)}
+    .sub{color:var(--muted);font-size:.88rem}
+    .pill{padding:2px 8px;border-radius:999px;font-size:.74rem;border:1px solid transparent}
+    .pj{background:rgba(90,176,255,.15);border-color:rgba(90,176,255,.45)} .pg{background:rgba(242,140,200,.14);border-color:rgba(242,140,200,.4)}
+
+    .head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}
+    .head h1{margin:0;font-size:1.15rem}
+    button{background:#293552;color:#fff;border:1px solid #415381;border-radius:9px;padding:7px 10px;cursor:pointer}
+    .cats{display:grid;gap:10px}
+    .cat{border:1px solid var(--line);border-radius:12px;padding:10px;background:rgba(255,255,255,.02)}
+    .catTop{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}
+    .cat h3{margin:0;font-size:1rem}
+    .current{font-size:.8rem;color:var(--muted)}
+
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+    .card{border:1px solid #33415f;border-radius:12px;overflow:hidden;background:#101624;display:flex;flex-direction:column}
+    .card img{width:100%;height:180px;object-fit:cover;background:#24304b}
+    .title{padding:7px 7px 4px;font-size:.8rem;line-height:1.25;min-height:45px}
+    .actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:4px;padding:6px}
+    .a{font-size:.74rem;padding:6px 4px;border-radius:8px;border:1px solid #3a496f;background:#1f2a42;text-align:center}
+    .a.j.on{background:rgba(90,176,255,.2);border-color:var(--j)}
+    .a.g.on{background:rgba(242,140,200,.2);border-color:var(--g)}
+    .a.w.on{background:rgba(45,212,165,.2);border-color:var(--ok)}
+    .noneWrap{margin-top:8px;display:flex;justify-content:flex-end}
+    .none{font-size:.78rem}
+    .none.on{background:#46321a;border-color:#7d5d2b;color:#ffd990}
+
+    @media (max-width:960px){.layout{grid-template-columns:1fr}.score{position:static}}
   </style>
 </head>
 <body>
 <div class="wrap">
-  <h1 style="margin:0 0 4px">🏆 Oscar Battle</h1>
-  <div class="muted" style="margin-bottom:12px">Plantilla lista para votar Jerry vs Gerardo (con referencia visual de nominados).</div>
-  <div class="grid">
-    <aside class="panel player" id="leftPanel">
-      <div class="name" id="leftName">Jerry</div>
-      <div class="score" id="leftScore">0</div>
-      <div class="muted">Aciertos: <b id="leftWins">0</b></div>
+  <div class="layout">
+    <aside class="panel score">
+      <h2>📊 Score Total</h2>
+      <div class="who"><div><div class="name">Jerry</div><div class="sub">Aciertos</div></div><div class="pts" id="sJ">0</div></div>
+      <div class="who"><div><div class="name">Gerardo</div><div class="sub">Aciertos</div></div><div class="pts" id="sG">0</div></div>
+      <div class="who"><div><div class="name">Avance</div><div class="sub">Categorías resueltas</div></div><div class="pts" id="sR">0</div></div>
+      <div class="sub" id="lead">Empate</div>
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+        <button id="save">Guardar</button><button id="load">Cargar</button><button id="reset">Reset</button>
+      </div>
     </aside>
 
     <main class="panel">
-      <div class="boardTop"><span class="badge">Premios + nominados + ganador real</span><span id="legend" class="muted">0 resueltos</span></div>
-      <div class="toolbar">
-        <button id="saveBtn">Guardar</button>
-        <button id="loadBtn">Cargar</button>
-        <button id="resetBtn">Reset</button>
+      <div class="head">
+        <h1>🏆 Oscar Battle (touch-friendly)</h1>
+        <div class="sub">Tap en tarjetas: <span class="pill pj">Jerry</span> <span class="pill pg">Gerardo</span> <span class="pill" style="border-color:#39c69c;background:rgba(45,212,165,.15)">Ganó</span></div>
       </div>
-      <div id="cats"></div>
+      <div class="cats" id="cats"></div>
     </main>
-
-    <aside class="panel player" id="rightPanel">
-      <div class="name" id="rightName">Gerardo</div>
-      <div class="score" id="rightScore">0</div>
-      <div class="muted">Aciertos: <b id="rightWins">0</b></div>
-    </aside>
   </div>
 </div>
 
 <script>
-const STORAGE='oscar-battle-v2';
-const IMG_FALLBACK='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80&auto=format&fit=crop';
-
-const state={
-  left:{name:'Jerry'},
-  right:{name:'Gerardo'},
-  categories:[
-    {title:'Mejor Película',nominees:[
-      {label:'Anora',film:'Anora'},{label:'The Brutalist',film:'The Brutalist'},{label:'A Complete Unknown',film:'A Complete Unknown'},
-      {label:'Conclave',film:'Conclave (film)'},{label:'Dune: Part Two',film:'Dune: Part Two'},{label:'Emilia Pérez',film:'Emilia Pérez'},
-      {label:'Nickel Boys',film:'Nickel Boys (film)'},{label:'The Substance',film:'The Substance'},{label:"I'm Still Here",film:"I'm Still Here (2024 film)"},{label:'Wicked',film:'Wicked (2024 film)'}
-    ],leftPick:'',rightPick:'',winner:''},
-
-    {title:'Mejor Dirección',nominees:[
-      {label:'Sean Baker — Anora',film:'Anora'},{label:'Brady Corbet — The Brutalist',film:'The Brutalist'},{label:'James Mangold — A Complete Unknown',film:'A Complete Unknown'},
-      {label:'Jacques Audiard — Emilia Pérez',film:'Emilia Pérez'},{label:'Coralie Fargeat — The Substance',film:'The Substance'}
-    ],leftPick:'',rightPick:'',winner:''},
-
-    {title:'Mejor Actor',nominees:[
-      {label:'Adrien Brody — The Brutalist',film:'The Brutalist'},{label:'Timothée Chalamet — A Complete Unknown',film:'A Complete Unknown'},
-      {label:'Colman Domingo — Sing Sing',film:'Sing Sing (film)'},{label:'Ralph Fiennes — Conclave',film:'Conclave (film)'},{label:'Sebastian Stan — The Apprentice',film:'The Apprentice (2024 film)'}
-    ],leftPick:'',rightPick:'',winner:''},
-
-    {title:'Mejor Actriz',nominees:[
-      {label:'Cynthia Erivo — Wicked',film:'Wicked (2024 film)'},{label:'Karla Sofía Gascón — Emilia Pérez',film:'Emilia Pérez'},
-      {label:'Mikey Madison — Anora',film:'Anora'},{label:'Demi Moore — The Substance',film:'The Substance'},{label:'Fernanda Torres — I\'m Still Here',film:"I'm Still Here (2024 film)"}
-    ],leftPick:'',rightPick:'',winner:''},
-
-    {title:'Mejor Actor de Reparto',nominees:[
-      {label:'Yura Borisov — Anora',film:'Anora'},{label:'Kieran Culkin — A Real Pain',film:'A Real Pain'},{label:'Edward Norton — A Complete Unknown',film:'A Complete Unknown'},
-      {label:'Guy Pearce — The Brutalist',film:'The Brutalist'},{label:'Jeremy Strong — The Apprentice',film:'The Apprentice (2024 film)'}
-    ],leftPick:'',rightPick:'',winner:''},
-
-    {title:'Mejor Actriz de Reparto',nominees:[
-      {label:'Monica Barbaro — A Complete Unknown',film:'A Complete Unknown'},{label:'Ariana Grande — Wicked',film:'Wicked (2024 film)'},{label:'Felicity Jones — The Brutalist',film:'The Brutalist'},
-      {label:'Isabella Rossellini — Conclave',film:'Conclave (film)'},{label:'Zoe Saldaña — Emilia Pérez',film:'Emilia Pérez'}
-    ],leftPick:'',rightPick:'',winner:''},
-
-    {title:'Mejor Película Animada',nominees:[
-      {label:'Flow',film:'Flow (2024 film)'},{label:'Inside Out 2',film:'Inside Out 2'},{label:'Memoir of a Snail',film:'Memoir of a Snail'},
-      {label:'Wallace & Gromit: Vengeance Most Fowl',film:'Wallace & Gromit: Vengeance Most Fowl'},{label:'The Wild Robot',film:'The Wild Robot'}
-    ],leftPick:'',rightPick:'',winner:''},
-
-    {title:'Mejor Película Internacional',nominees:[
-      {label:"I'm Still Here",film:"I'm Still Here (2024 film)"},{label:'Emilia Pérez',film:'Emilia Pérez'},{label:'Flow',film:'Flow (2024 film)'},
-      {label:'The Girl with the Needle',film:'The Girl with the Needle'},{label:'The Seed of the Sacred Fig',film:'The Seed of the Sacred Fig'}
-    ],leftPick:'',rightPick:'',winner:''}
-  ]
-};
-
-const imageCache={};
+const KEY='oscar-battle-touch-v1';
+const FALL='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80&auto=format&fit=crop';
+const state={categories:[
+{title:'Mejor Película',nominees:['Anora','The Brutalist','A Complete Unknown','Conclave','Dune: Part Two','Emilia Pérez','Nickel Boys','The Substance',"I\'m Still Here",'Wicked'],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Dirección',nominees:['Sean Baker — Anora','Brady Corbet — The Brutalist','James Mangold — A Complete Unknown','Jacques Audiard — Emilia Pérez','Coralie Fargeat — The Substance'],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Actor',nominees:['Adrien Brody — The Brutalist','Timothée Chalamet — A Complete Unknown','Colman Domingo — Sing Sing','Ralph Fiennes — Conclave','Sebastian Stan — The Apprentice'],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Actriz',nominees:['Cynthia Erivo — Wicked','Karla Sofía Gascón — Emilia Pérez','Mikey Madison — Anora','Demi Moore — The Substance','Fernanda Torres — I\'m Still Here'],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Actor de Reparto',nominees:['Yura Borisov — Anora','Kieran Culkin — A Real Pain','Edward Norton — A Complete Unknown','Guy Pearce — The Brutalist','Jeremy Strong — The Apprentice'],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Actriz de Reparto',nominees:['Monica Barbaro — A Complete Unknown','Ariana Grande — Wicked','Felicity Jones — The Brutalist','Isabella Rossellini — Conclave','Zoe Saldaña — Emilia Pérez'],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Película Animada',nominees:['Flow','Inside Out 2','Memoir of a Snail','Wallace & Gromit: Vengeance Most Fowl','The Wild Robot'],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Película Internacional',nominees:["I\'m Still Here",'Emilia Pérez','Flow','The Girl with the Needle','The Seed of the Sacred Fig'],leftPick:'',rightPick:'',winner:''}
+]};
+const cache={};
 const $=id=>document.getElementById(id);
 
-async function wikiThumb(title){
-  if(imageCache[title]) return imageCache[title];
-  try{
-    const u=`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
-    const r=await fetch(u);
-    const j=await r.json();
-    const src=j?.thumbnail?.source||IMG_FALLBACK;
-    imageCache[title]=src; return src;
-  }catch{ return IMG_FALLBACK; }
-}
+function filmTitle(label){return label.includes('—')?label.split('—')[1].trim():label}
+async function thumb(title){if(cache[title])return cache[title];try{const r=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);const j=await r.json();return cache[title]=j?.thumbnail?.source||FALL}catch{return FALL}}
 
 function render(){
-  $('leftName').textContent=state.left.name; $('rightName').textContent=state.right.name;
+  $('cats').innerHTML=state.categories.map((c,i)=>`<section class='cat'>
+    <div class='catTop'><h3>${esc(c.title)}</h3><div class='current'>J: ${esc(c.leftPick||'—')} · G: ${esc(c.rightPick||'—')} · Ganó: ${esc(c.winner||'—')}</div></div>
+    <div class='grid'>${c.nominees.map((n,j)=>`<article class='card'>
+      <img id='img-${i}-${j}' src='${FALL}'><div class='title'>${esc(n)}</div>
+      <div class='actions'>
+        <button class='a j ${c.leftPick===n?'on':''}' data-a='j' data-i='${i}' data-v='${escA(n)}'>Jerry</button>
+        <button class='a g ${c.rightPick===n?'on':''}' data-a='g' data-i='${i}' data-v='${escA(n)}'>Gerardo</button>
+        <button class='a w ${c.winner===n?'on':''}' data-a='w' data-i='${i}' data-v='${escA(n)}'>Ganó</button>
+      </div></article>`).join('')}</div>
+    <div class='noneWrap'><button class='none ${c.winner==='NINGUNO'?'on':''}' data-a='none' data-i='${i}'>Nadie ganó</button></div>
+  </section>`).join('');
 
-  $('cats').innerHTML=state.categories.map((c,i)=>{
-    const opts=c.nominees.map(n=>`<option ${c.leftPick===n.label?'selected':''}>${n.label}</option>`).join('');
-    const ropts=c.nominees.map(n=>`<option ${c.rightPick===n.label?'selected':''}>${n.label}</option>`).join('');
-    const chips=c.nominees.map(n=>`<button class="chip ${c.winner===n.label?'active':''}" data-a="win" data-i="${i}" data-v="${esc(n.label)}">${n.label}</button>`).join('');
-    const cards=c.nominees.map((n,idx)=>`<div class="nom"><img id="img-${i}-${idx}" src="${IMG_FALLBACK}"><div class="t">${esc(n.label)}</div></div>`).join('');
-    return `<section class="cat"><h3>${esc(c.title)}</h3>
-      <div class="nominees">${cards}</div>
-      <div class="row"><label>Voto ${esc(state.left.name)}</label><select data-a="lp" data-i="${i}"><option value="">— elegir —</option>${opts}</select></div>
-      <div class="row"><label>Voto ${esc(state.right.name)}</label><select data-a="rp" data-i="${i}"><option value="">— elegir —</option>${ropts}</select></div>
-      <div class="chips">${chips}<button class="chip ${c.winner==='NINGUNO'?'active':''}" data-a="win" data-i="${i}" data-v="NINGUNO">Nadie ganó</button><button class="chip" data-a="clear" data-i="${i}">Limpiar</button></div>
-    </section>`;
-  }).join('');
+  document.querySelectorAll('[data-a]').forEach(b=>b.onclick=e=>{
+    const i=+e.currentTarget.dataset.i,a=e.currentTarget.dataset.a,v=e.currentTarget.dataset.v||'';
+    if(a==='j') state.categories[i].leftPick=v;
+    if(a==='g') state.categories[i].rightPick=v;
+    if(a==='w') state.categories[i].winner=v;
+    if(a==='none') state.categories[i].winner='NINGUNO';
+    render();
+  });
 
-  bind(); compute(); loadThumbs();
+  score(); loadImgs();
 }
 
-function bind(){
-  document.querySelectorAll('[data-a="lp"]').forEach(e=>e.onchange=ev=>{state.categories[+ev.target.dataset.i].leftPick=ev.target.value;compute();});
-  document.querySelectorAll('[data-a="rp"]').forEach(e=>e.onchange=ev=>{state.categories[+ev.target.dataset.i].rightPick=ev.target.value;compute();});
-  document.querySelectorAll('[data-a="win"]').forEach(e=>e.onclick=ev=>{const c=state.categories[+ev.target.dataset.i];c.winner=ev.target.dataset.v;render();});
-  document.querySelectorAll('[data-a="clear"]').forEach(e=>e.onclick=ev=>{state.categories[+ev.target.dataset.i].winner='';render();});
-}
-
-async function loadThumbs(){
-  for(let i=0;i<state.categories.length;i++){
-    for(let j=0;j<state.categories[i].nominees.length;j++){
-      const n=state.categories[i].nominees[j];
-      const img=$(`img-${i}-${j}`); if(!img) continue;
-      img.src=await wikiThumb(n.film||n.label);
-    }
-  }
-}
-
-function compute(){
-  let l=0,r=0,res=0;
-  state.categories.forEach(c=>{if(!c.winner)return;res++; if(c.winner!=='NINGUNO'){if(c.leftPick===c.winner)l++; if(c.rightPick===c.winner)r++;}});
-  $('leftScore').textContent=l; $('rightScore').textContent=r; $('leftWins').textContent=l; $('rightWins').textContent=r;
-  $('legend').textContent=`${res}/${state.categories.length} resueltos`;
-}
-
-function esc(s=''){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-$('leftPanel').ondblclick=()=>{const n=prompt('Nombre izquierda',state.left.name); if(n){state.left.name=n.trim();render();}};
-$('rightPanel').ondblclick=()=>{const n=prompt('Nombre derecha',state.right.name); if(n){state.right.name=n.trim();render();}};
-$('saveBtn').onclick=()=>{localStorage.setItem(STORAGE,JSON.stringify(state));alert('Guardado ✅')};
-$('loadBtn').onclick=()=>{const raw=localStorage.getItem(STORAGE);if(!raw)return alert('Sin guardado');Object.assign(state,JSON.parse(raw));render();};
-$('resetBtn').onclick=()=>{if(confirm('¿Reset?')){localStorage.removeItem(STORAGE);location.reload();}};
-
+async function loadImgs(){for(let i=0;i<state.categories.length;i++){for(let j=0;j<state.categories[i].nominees.length;j++){const el=$(`img-${i}-${j}`); if(!el)continue; el.src=await thumb(filmTitle(state.categories[i].nominees[j]));}}}
+function score(){let j=0,g=0,r=0;state.categories.forEach(c=>{if(!c.winner)return;r++;if(c.winner!=='NINGUNO'){if(c.leftPick===c.winner)j++;if(c.rightPick===c.winner)g++;}});$('sJ').textContent=j;$('sG').textContent=g;$('sR').textContent=`${r}/${state.categories.length}`;$('lead').textContent=j===g?'Empate':(j>g?'Va ganando Jerry':'Va ganando Gerardo')}
+function esc(s=''){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function escA(s=''){return s.replace(/"/g,'&quot;')}
+$('save').onclick=()=>{localStorage.setItem(KEY,JSON.stringify(state));alert('Guardado ✅')}
+$('load').onclick=()=>{const raw=localStorage.getItem(KEY);if(!raw)return alert('No hay guardado');const d=JSON.parse(raw);state.categories=d.categories||state.categories;render()}
+$('reset').onclick=()=>{if(confirm('¿Reset total?')){localStorage.removeItem(KEY);location.reload()}}
 render();
 </script>
 </body>
