@@ -99,6 +99,39 @@ const state={categories:[
 const cache={};
 const $=id=>document.getElementById(id);
 
+// Orden sugerido de transmisión (Best Picture al final)
+const ORDER = [
+  'Mejor Actor de Reparto',
+  'Mejor Actriz de Reparto',
+  'Mejor Cortometraje de Animación',
+  'Mejor Cortometraje Documental',
+  'Mejor Cortometraje de Ficción',
+  'Mejor Película de Animación',
+  'Mejor Película Internacional',
+  'Mejor Película Documental',
+  'Mejor Sonido',
+  'Mejores Efectos Visuales',
+  'Mejor Maquillaje y Peluquería',
+  'Mejor Vestuario',
+  'Mejor Diseño de Producción',
+  'Mejor Fotografía',
+  'Mejor Montaje',
+  'Mejor Música Original',
+  'Mejor Canción Original',
+  'Mejor Guion Adaptado',
+  'Mejor Guion Original',
+  'Mejor Casting',
+  'Mejor Actor',
+  'Mejor Actriz',
+  'Mejor Dirección',
+  'Mejor Película'
+];
+state.categories.sort((a,b)=>{
+  const ia = ORDER.indexOf(a.title);
+  const ib = ORDER.indexOf(b.title);
+  return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
+});
+
 function filmTitle(label){return label.includes('—')?label.split('—')[1].trim():label}
 async function thumb(title){if(cache[title])return cache[title];try{const r=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);const j=await r.json();return cache[title]=j?.thumbnail?.source||FALL}catch{return FALL}}
 
