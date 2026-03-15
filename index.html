@@ -11,8 +11,7 @@
     .grid{display:grid;grid-template-columns:260px 1fr 260px;gap:12px}
     .panel{background:linear-gradient(180deg,#171b24,#1b2130);border:1px solid var(--line);border-radius:14px;padding:12px}
     .player{text-align:center;position:sticky;top:10px}
-    .avatar{width:110px;height:110px;border-radius:999px;object-fit:cover;border:3px solid var(--gold);display:block;margin:0 auto 8px;background:#2a3348}
-    .name{font-weight:800}.score{font-size:2rem;color:var(--gold);font-weight:900}.muted{color:var(--muted);font-size:.9rem}
+        .name{font-weight:800}.score{font-size:2rem;color:var(--gold);font-weight:900}.muted{color:var(--muted);font-size:.9rem}
     .boardTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
     .badge{font-size:.82rem;padding:5px 10px;border-radius:999px;border:1px solid #655126;background:#3f3214;color:#ffd980}
     .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
@@ -35,11 +34,9 @@
   <div class="muted" style="margin-bottom:12px">Plantilla lista para votar Jerry vs Gerardo (con referencia visual de nominados).</div>
   <div class="grid">
     <aside class="panel player" id="leftPanel">
-      <img class="avatar" id="leftAvatar" src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=400&q=80&auto=format&fit=crop"/>
       <div class="name" id="leftName">Jerry</div>
       <div class="score" id="leftScore">0</div>
       <div class="muted">Aciertos: <b id="leftWins">0</b></div>
-      <label class="btn" style="display:inline-block;margin-top:8px">Cambiar foto<input id="leftPhoto" type="file" accept="image/*" hidden></label>
     </aside>
 
     <main class="panel">
@@ -53,11 +50,9 @@
     </main>
 
     <aside class="panel player" id="rightPanel">
-      <img class="avatar" id="rightAvatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80&auto=format&fit=crop"/>
       <div class="name" id="rightName">Gerardo</div>
       <div class="score" id="rightScore">0</div>
       <div class="muted">Aciertos: <b id="rightWins">0</b></div>
-      <label class="btn" style="display:inline-block;margin-top:8px">Cambiar foto<input id="rightPhoto" type="file" accept="image/*" hidden></label>
     </aside>
   </div>
 </div>
@@ -67,8 +62,8 @@ const STORAGE='oscar-battle-v2';
 const IMG_FALLBACK='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80&auto=format&fit=crop';
 
 const state={
-  left:{name:'Jerry',photo:null},
-  right:{name:'Gerardo',photo:null},
+  left:{name:'Jerry'},
+  right:{name:'Gerardo'},
   categories:[
     {title:'Mejor Película',nominees:[
       {label:'Anora',film:'Anora'},{label:'The Brutalist',film:'The Brutalist'},{label:'A Complete Unknown',film:'A Complete Unknown'},
@@ -129,8 +124,6 @@ async function wikiThumb(title){
 
 function render(){
   $('leftName').textContent=state.left.name; $('rightName').textContent=state.right.name;
-  if(state.left.photo) $('leftAvatar').src=state.left.photo;
-  if(state.right.photo) $('rightAvatar').src=state.right.photo;
 
   $('cats').innerHTML=state.categories.map((c,i)=>{
     const opts=c.nominees.map(n=>`<option ${c.leftPick===n.label?'selected':''}>${n.label}</option>`).join('');
@@ -173,8 +166,6 @@ function compute(){
 }
 
 function esc(s=''){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-function photo(input,side){input.onchange=e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{state[side].photo=r.result;render();};r.readAsDataURL(f);};}
-photo($('leftPhoto'),'left'); photo($('rightPhoto'),'right');
 $('leftPanel').ondblclick=()=>{const n=prompt('Nombre izquierda',state.left.name); if(n){state.left.name=n.trim();render();}};
 $('rightPanel').ondblclick=()=>{const n=prompt('Nombre derecha',state.right.name); if(n){state.right.name=n.trim();render();}};
 $('saveBtn').onclick=()=>{localStorage.setItem(STORAGE,JSON.stringify(state));alert('Guardado ✅')};
