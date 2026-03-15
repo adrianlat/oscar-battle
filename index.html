@@ -71,14 +71,30 @@
 const KEY='oscar-battle-touch-v1';
 const FALL='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80&auto=format&fit=crop';
 const state={categories:[
-{title:'Mejor Película',nominees:['Bugonia','F1','Frankenstein','Hamnet','Marty Supreme','One Battle after Another','The Secret Agent','Sentimental Value','Sinners','Train Dreams'],leftPick:'',rightPick:'',winner:''},
-{title:'Mejor Dirección',nominees:['Chloé Zhao — Hamnet','Josh Safdie — Marty Supreme','Paul Thomas Anderson — One Battle after Another','Joachim Trier — Sentimental Value','Ryan Coogler — Sinners'],leftPick:'',rightPick:'',winner:''},
-{title:'Mejor Actor',nominees:['Timothée Chalamet — Marty Supreme','Leonardo DiCaprio — One Battle after Another','Ethan Hawke — Blue Moon','Michael B. Jordan — Sinners','Wagner Moura — The Secret Agent'],leftPick:'',rightPick:'',winner:''},
-{title:'Mejor Actriz',nominees:['Jessie Buckley — Hamnet',"Rose Byrne — If I Had Legs I'd Kick You",'Kate Hudson — Song Sung Blue','Renate Reinsve — Sentimental Value','Emma Stone — Bugonia'],leftPick:'',rightPick:'',winner:''},
-{title:'Mejor Actor de Reparto',nominees:['Benicio Del Toro — One Battle after Another','Jacob Elordi — Frankenstein','Delroy Lindo — Sinners','Sean Penn — One Battle after Another','Stellan Skarsgård — Sentimental Value'],leftPick:'',rightPick:'',winner:''},
-{title:'Mejor Actriz de Reparto',nominees:['Elle Fanning — Sentimental Value','Inga Ibsdotter Lilleaas — Sentimental Value','Amy Madigan — Weapons','Wunmi Mosaku — Sinners','Teyana Taylor — One Battle after Another'],leftPick:'',rightPick:'',winner:''},
-{title:'Mejor Película Animada',nominees:['Arco','Elio','KPop Demon Hunters','Little Amélie or the Character of Rain','Zootopia 2'],leftPick:'',rightPick:'',winner:''},
-{title:'Mejor Película Internacional',nominees:['Brazil — The Secret Agent','France — It Was Just an Accident','Norway — Sentimental Value','Spain — Sirāt','Tunisia — The Voice of Hind Rajab'],leftPick:'',rightPick:'',winner:''}
+{title:'Mejor Película',nominees:["Una batalla tras otra","Bugonia","Frankenstein","Hamnet","Marty Supreme","El agente secreto","Valor sentimental","Los pecadores","Sueños de trenes","F1: La película"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Dirección',nominees:["Paul Thomas Anderson — Una batalla tras otra","Chloé Zhao — Hamnet","Josh Safdie — Marty Supreme","Ryan Coogler — Los pecadores","Joachim Trier — Valor sentimental"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Actriz',nominees:["Jessie Buckley — Hamnet","Emma Stone — Bugonia","Kate Hudson — Song Sung Blue","Renate Reinsve — Valor sentimental","Rose Byrne — Si pudiera, te daría una patada"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Actor',nominees:["Leonardo DiCaprio — Una batalla tras otra","Timothée Chalamet — Marty Supreme","Michael B. Jordan — Los pecadores","Ethan Hawke — Blue Moon","Wagner Moura — El agente secreto"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Actriz de Reparto',nominees:["Teyana Taylor — Una batalla tras otra","Amy Madigan — Weapons","Elle Fanning — Valor sentimental","Inga Ibsdotter Lilleaas — Valor sentimental","Wunmi Mosaku — Los pecadores"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Actor de Reparto',nominees:["Sean Penn — Una batalla tras otra","Benicio Del Toro — Una batalla tras otra","Jacob Elordi — Frankenstein","Stellan Skarsgård — Valor sentimental","Delroy Lindo — Los pecadores"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Casting',nominees:["Una batalla tras otra","Hamnet","Marty Supreme","Los pecadores","El agente secreto"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Guion Original',nominees:["Los pecadores","Marty Supreme","Valor sentimental","Un simple accidente","Blue Moon"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Guion Adaptado',nominees:["Una batalla tras otra","Hamnet","Frankenstein","Bugonia","Sueños de trenes"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Película Internacional',nominees:["Valor sentimental (Noruega)","El agente secreto (Brasil)","Un simple accidente (Francia)","Sirāt (España)","La voz de Hind (Túnez)"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Película Documental',nominees:["Mr. Nobody contra Putin","Cutting Through Rocks","La vecina perfecta","The Alabama Solution","Come See Me In The Good Light"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Película de Animación',nominees:["Arco","Las guerreras k-pop","Zootrópolis 2","Little Amélie","Elio"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Montaje',nominees:["F1: La película","Una batalla tras otra","Marty Supreme","Los pecadores","Valor sentimental"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Fotografía',nominees:["Los pecadores","Una batalla tras otra","Marty Supreme","Frankenstein","Sueños de trenes"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Diseño de Producción',nominees:["Frankenstein","Los pecadores","Hamnet","Marty Supreme","Una batalla tras otra"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Vestuario',nominees:["Avatar: Fuego y ceniza","Frankenstein","Los pecadores","Hamnet","Marty Supreme"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Maquillaje y Peluquería',nominees:["Frankenstein","Los pecadores","The Smashing Machine","Kokuho","La hermanastra fea"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Música Original',nominees:["Bugonia","Los pecadores","Una batalla tras otra","Frankenstein","Hamnet"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Sonido',nominees:["F1: La película","Los pecadores","Una batalla tras otra","Frankenstein","Sirāt"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Canción Original',nominees:["Golden — Las guerreras k-pop","I Lied to You — Los pecadores","Train Dreams — Sueños de trenes","Dear Me — Diane Warren: Relentless","Sweet Dreams of Joy — Viva Verdi"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejores Efectos Visuales',nominees:["Avatar: Fuego y ceniza","Los pecadores","F1: La película","Jurassic World: El renacer","Laberinto en llamas"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Cortometraje de Ficción',nominees:["Butcher's Stain","A Friend of Dorothy","Jane Austen's Period Drama","The Singers","Dos personas intercambiando saliva"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Cortometraje de Animación',nominees:["Butterfly","Forevergreen","The Girl Who Cried Pearls","Retirement Plan","The Three Sisters"],leftPick:'',rightPick:'',winner:''},
+{title:'Mejor Cortometraje Documental',nominees:["Todas las habitaciones vacías","Armed Only with a Camera: The Life and Death of Brent Renaud","Children No More: Were and Are Gone","The Devil Is Busy","Perfectly a Strangeness"],leftPick:'',rightPick:'',winner:''}
 ]};
 const cache={};
 const $=id=>document.getElementById(id);
