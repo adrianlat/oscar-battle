@@ -5,451 +5,183 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Oscar Battle · Jerry vs Gerardo</title>
   <style>
-    :root {
-      --bg: #0f1115;
-      --panel: #171a21;
-      --panel-2: #1f2430;
-      --line: #2d3444;
-      --text: #f3f5f8;
-      --muted: #a7b1c2;
-      --gold: #f6c453;
-      --green: #2dd4a5;
-      --red: #ff6b6b;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background: radial-gradient(circle at top, #1a1f2b, var(--bg) 50%);
-      color: var(--text);
-    }
-    .wrap { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    h1 { margin: 0 0 4px; font-size: 1.6rem; }
-    .sub { color: var(--muted); margin-bottom: 18px; }
-
-    .grid {
-      display: grid;
-      grid-template-columns: 280px 1fr 280px;
-      gap: 14px;
-      align-items: start;
-    }
-    .panel {
-      background: linear-gradient(180deg, var(--panel), var(--panel-2));
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 14px;
-      box-shadow: 0 8px 30px rgba(0,0,0,.25);
-    }
-    .player {
-      text-align: center;
-      position: sticky;
-      top: 12px;
-    }
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 999px;
-      object-fit: cover;
-      border: 3px solid var(--gold);
-      background: #2a3242;
-      display: block;
-      margin: 0 auto 10px;
-    }
-    .name {
-      font-size: 1.15rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .score {
-      font-size: 2.1rem;
-      font-weight: 800;
-      color: var(--gold);
-      line-height: 1;
-      margin-bottom: 4px;
-    }
-    .wins {
-      color: var(--muted);
-      margin-bottom: 12px;
-      font-size: .95rem;
-    }
-    .btn, .file-label {
-      display: inline-block;
-      background: #2a3140;
-      color: var(--text);
-      border: 1px solid #3a4356;
-      border-radius: 10px;
-      padding: 8px 10px;
-      font-size: .9rem;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    input[type="file"] { display: none; }
-
-    .board-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .badge {
-      background: rgba(246,196,83,.14);
-      color: #ffd980;
-      border: 1px solid rgba(246,196,83,.35);
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: .83rem;
-    }
-
-    .category {
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 10px;
-      margin-bottom: 10px;
-      background: rgba(255,255,255,.02);
-    }
-    .cat-title {
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-    .row {
-      display: grid;
-      grid-template-columns: 1fr 160px;
-      gap: 8px;
-      margin: 6px 0;
-      align-items: center;
-    }
-    select, input[type="text"], textarea {
-      width: 100%;
-      background: #11161f;
-      color: var(--text);
-      border: 1px solid #2f3850;
-      border-radius: 9px;
-      padding: 8px;
-      font-size: .92rem;
-    }
-    .result-line {
-      margin-top: 8px;
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 8px;
-    }
-    .result-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-    .chip {
-      border: 1px solid #44506a;
-      background: #232a39;
-      color: var(--text);
-      padding: 6px 9px;
-      border-radius: 999px;
-      font-size: .82rem;
-      cursor: pointer;
-    }
-    .chip.active { border-color: var(--gold); background: #3c3320; }
-    .legend { color: var(--muted); font-size: .85rem; }
-
-    .toolbar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
-    .btn-primary { background: #3a2f11; border-color: #6b5420; color: #ffd980; }
-    .btn-danger { background: #3a1f23; border-color: #6a2d35; color: #ffb7bf; }
-
-    .footer {
-      margin-top: 12px;
-      padding: 10px;
-      border-radius: 10px;
-      background: #121825;
-      border: 1px solid #2a3550;
-      color: var(--muted);
-      font-size: .9rem;
-    }
-
-    @media (max-width: 980px) {
-      .grid { grid-template-columns: 1fr; }
-      .player { position: static; }
-    }
+    :root{--bg:#0e0f14;--card:#171a22;--line:#2c3242;--txt:#f4f6fb;--muted:#9ca8be;--gold:#f6c453}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui;background:radial-gradient(circle at top,#1c2230,var(--bg) 55%);color:var(--txt)}
+    .wrap{max-width:1250px;margin:0 auto;padding:18px}
+    .grid{display:grid;grid-template-columns:260px 1fr 260px;gap:12px}
+    .panel{background:linear-gradient(180deg,#171b24,#1b2130);border:1px solid var(--line);border-radius:14px;padding:12px}
+    .player{text-align:center;position:sticky;top:10px}
+    .avatar{width:110px;height:110px;border-radius:999px;object-fit:cover;border:3px solid var(--gold);display:block;margin:0 auto 8px;background:#2a3348}
+    .name{font-weight:800}.score{font-size:2rem;color:var(--gold);font-weight:900}.muted{color:var(--muted);font-size:.9rem}
+    .boardTop{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+    .badge{font-size:.82rem;padding:5px 10px;border-radius:999px;border:1px solid #655126;background:#3f3214;color:#ffd980}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+    button,.btn{background:#293246;border:1px solid #44506d;color:#fff;border-radius:10px;padding:7px 10px;cursor:pointer}
+    .cat{border:1px solid var(--line);border-radius:12px;padding:10px;margin-bottom:10px;background:rgba(255,255,255,.02)}
+    .cat h3{margin:0 0 8px;font-size:1rem}
+    .nominees{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-bottom:8px}
+    .nom{background:#121825;border:1px solid #2b3448;border-radius:10px;overflow:hidden}
+    .nom img{width:100%;height:150px;object-fit:cover;background:#263047}
+    .nom .t{padding:6px;font-size:.78rem;line-height:1.25;color:#dce4f2;min-height:48px}
+    .row{display:grid;grid-template-columns:1fr 160px;gap:8px;align-items:center;margin:6px 0}
+    select{width:100%;background:#0f1420;color:#fff;border:1px solid #394560;border-radius:8px;padding:7px}
+    .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px}.chip{font-size:.8rem;border-radius:999px;padding:5px 9px}.active{border-color:#8f7130;background:#4b3f21;color:#ffe2a6}
+    @media (max-width:980px){.grid{grid-template-columns:1fr}.player{position:static}}
   </style>
 </head>
 <body>
-  <div class="wrap">
-    <h1>🏆 Oscar Battle</h1>
-    <div class="sub">Competencia rápida para votar y marcar ganadores en vivo.</div>
+<div class="wrap">
+  <h1 style="margin:0 0 4px">🏆 Oscar Battle</h1>
+  <div class="muted" style="margin-bottom:12px">Plantilla lista para votar Jerry vs Gerardo (con referencia visual de nominados).</div>
+  <div class="grid">
+    <aside class="panel player" id="leftPanel">
+      <img class="avatar" id="leftAvatar" src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=400&q=80&auto=format&fit=crop"/>
+      <div class="name" id="leftName">Jerry</div>
+      <div class="score" id="leftScore">0</div>
+      <div class="muted">Aciertos: <b id="leftWins">0</b></div>
+      <label class="btn" style="display:inline-block;margin-top:8px">Cambiar foto<input id="leftPhoto" type="file" accept="image/*" hidden></label>
+    </aside>
 
-    <div class="grid">
-      <section class="panel player" id="leftPanel">
-        <img class="avatar" id="leftAvatar" alt="Foto jugador izquierda" src="https://images.unsplash.com/photo-1544723795-3fb6469f5b39?w=400&q=80&auto=format&fit=crop" />
-        <div class="name" id="leftName">Jerry</div>
-        <div class="score" id="leftScore">0</div>
-        <div class="wins">Aciertos: <strong id="leftWins">0</strong></div>
-        <label class="file-label">Cambiar foto<input type="file" accept="image/*" id="leftPhotoInput"></label>
-      </section>
+    <main class="panel">
+      <div class="boardTop"><span class="badge">Premios + nominados + ganador real</span><span id="legend" class="muted">0 resueltos</span></div>
+      <div class="toolbar">
+        <button id="saveBtn">Guardar</button>
+        <button id="loadBtn">Cargar</button>
+        <button id="resetBtn">Reset</button>
+      </div>
+      <div id="cats"></div>
+    </main>
 
-      <section class="panel">
-        <div class="board-head">
-          <div class="badge">Centro: premios + nominados + ganador real</div>
-          <div class="legend" id="statusLegend">Sin resultados todavía</div>
-        </div>
-
-        <div class="toolbar">
-          <button class="btn btn-primary" id="addCategoryBtn">+ Agregar premio</button>
-          <button class="btn" id="saveBtn">Guardar local</button>
-          <button class="btn" id="loadBtn">Cargar local</button>
-          <button class="btn btn-danger" id="resetBtn">Reset</button>
-        </div>
-
-        <div id="categories"></div>
-
-        <div class="footer">
-          Tip: cada premio suma 1 punto al que acierte. Puedes marcar “Nadie ganó” cuando ambos fallen.
-        </div>
-      </section>
-
-      <section class="panel player" id="rightPanel">
-        <img class="avatar" id="rightAvatar" alt="Foto jugador derecha" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80&auto=format&fit=crop" />
-        <div class="name" id="rightName">Gerardo</div>
-        <div class="score" id="rightScore">0</div>
-        <div class="wins">Aciertos: <strong id="rightWins">0</strong></div>
-        <label class="file-label">Cambiar foto<input type="file" accept="image/*" id="rightPhotoInput"></label>
-      </section>
-    </div>
+    <aside class="panel player" id="rightPanel">
+      <img class="avatar" id="rightAvatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80&auto=format&fit=crop"/>
+      <div class="name" id="rightName">Gerardo</div>
+      <div class="score" id="rightScore">0</div>
+      <div class="muted">Aciertos: <b id="rightWins">0</b></div>
+      <label class="btn" style="display:inline-block;margin-top:8px">Cambiar foto<input id="rightPhoto" type="file" accept="image/*" hidden></label>
+    </aside>
   </div>
+</div>
 
-  <script>
-    const STORAGE_KEY = 'oscar-battle-v1';
+<script>
+const STORAGE='oscar-battle-v2';
+const IMG_FALLBACK='https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=500&q=80&auto=format&fit=crop';
 
-    const state = {
-      left: { name: 'Jerry', photo: null },
-      right: { name: 'Gerardo', photo: null },
-      categories: [
-        {
-          title: 'Mejor Película',
-          nominees: ['Anora', 'The Brutalist', 'Conclave', 'Dune: Part Two', 'Wicked'],
-          leftPick: '',
-          rightPick: '',
-          winner: ''
-        },
-        {
-          title: 'Mejor Dirección',
-          nominees: ['Sean Baker', 'Brady Corbet', 'Jacques Audiard', 'Coralie Fargeat', 'James Mangold'],
-          leftPick: '',
-          rightPick: '',
-          winner: ''
-        }
-      ]
-    };
+const state={
+  left:{name:'Jerry',photo:null},
+  right:{name:'Gerardo',photo:null},
+  categories:[
+    {title:'Mejor Película',nominees:[
+      {label:'Anora',film:'Anora'},{label:'The Brutalist',film:'The Brutalist'},{label:'A Complete Unknown',film:'A Complete Unknown'},
+      {label:'Conclave',film:'Conclave (film)'},{label:'Dune: Part Two',film:'Dune: Part Two'},{label:'Emilia Pérez',film:'Emilia Pérez'},
+      {label:'Nickel Boys',film:'Nickel Boys (film)'},{label:'The Substance',film:'The Substance'},{label:"I'm Still Here",film:"I'm Still Here (2024 film)"},{label:'Wicked',film:'Wicked (2024 film)'}
+    ],leftPick:'',rightPick:'',winner:''},
 
-    const el = {
-      categories: document.getElementById('categories'),
-      leftName: document.getElementById('leftName'),
-      rightName: document.getElementById('rightName'),
-      leftScore: document.getElementById('leftScore'),
-      rightScore: document.getElementById('rightScore'),
-      leftWins: document.getElementById('leftWins'),
-      rightWins: document.getElementById('rightWins'),
-      leftAvatar: document.getElementById('leftAvatar'),
-      rightAvatar: document.getElementById('rightAvatar'),
-      leftPhotoInput: document.getElementById('leftPhotoInput'),
-      rightPhotoInput: document.getElementById('rightPhotoInput'),
-      statusLegend: document.getElementById('statusLegend')
-    };
+    {title:'Mejor Dirección',nominees:[
+      {label:'Sean Baker — Anora',film:'Anora'},{label:'Brady Corbet — The Brutalist',film:'The Brutalist'},{label:'James Mangold — A Complete Unknown',film:'A Complete Unknown'},
+      {label:'Jacques Audiard — Emilia Pérez',film:'Emilia Pérez'},{label:'Coralie Fargeat — The Substance',film:'The Substance'}
+    ],leftPick:'',rightPick:'',winner:''},
 
-    function createOption(value, selectedValue) {
-      return `<option value="${escapeHtml(value)}" ${value === selectedValue ? 'selected' : ''}>${escapeHtml(value)}</option>`;
+    {title:'Mejor Actor',nominees:[
+      {label:'Adrien Brody — The Brutalist',film:'The Brutalist'},{label:'Timothée Chalamet — A Complete Unknown',film:'A Complete Unknown'},
+      {label:'Colman Domingo — Sing Sing',film:'Sing Sing (film)'},{label:'Ralph Fiennes — Conclave',film:'Conclave (film)'},{label:'Sebastian Stan — The Apprentice',film:'The Apprentice (2024 film)'}
+    ],leftPick:'',rightPick:'',winner:''},
+
+    {title:'Mejor Actriz',nominees:[
+      {label:'Cynthia Erivo — Wicked',film:'Wicked (2024 film)'},{label:'Karla Sofía Gascón — Emilia Pérez',film:'Emilia Pérez'},
+      {label:'Mikey Madison — Anora',film:'Anora'},{label:'Demi Moore — The Substance',film:'The Substance'},{label:'Fernanda Torres — I\'m Still Here',film:"I'm Still Here (2024 film)"}
+    ],leftPick:'',rightPick:'',winner:''},
+
+    {title:'Mejor Actor de Reparto',nominees:[
+      {label:'Yura Borisov — Anora',film:'Anora'},{label:'Kieran Culkin — A Real Pain',film:'A Real Pain'},{label:'Edward Norton — A Complete Unknown',film:'A Complete Unknown'},
+      {label:'Guy Pearce — The Brutalist',film:'The Brutalist'},{label:'Jeremy Strong — The Apprentice',film:'The Apprentice (2024 film)'}
+    ],leftPick:'',rightPick:'',winner:''},
+
+    {title:'Mejor Actriz de Reparto',nominees:[
+      {label:'Monica Barbaro — A Complete Unknown',film:'A Complete Unknown'},{label:'Ariana Grande — Wicked',film:'Wicked (2024 film)'},{label:'Felicity Jones — The Brutalist',film:'The Brutalist'},
+      {label:'Isabella Rossellini — Conclave',film:'Conclave (film)'},{label:'Zoe Saldaña — Emilia Pérez',film:'Emilia Pérez'}
+    ],leftPick:'',rightPick:'',winner:''},
+
+    {title:'Mejor Película Animada',nominees:[
+      {label:'Flow',film:'Flow (2024 film)'},{label:'Inside Out 2',film:'Inside Out 2'},{label:'Memoir of a Snail',film:'Memoir of a Snail'},
+      {label:'Wallace & Gromit: Vengeance Most Fowl',film:'Wallace & Gromit: Vengeance Most Fowl'},{label:'The Wild Robot',film:'The Wild Robot'}
+    ],leftPick:'',rightPick:'',winner:''},
+
+    {title:'Mejor Película Internacional',nominees:[
+      {label:"I'm Still Here",film:"I'm Still Here (2024 film)"},{label:'Emilia Pérez',film:'Emilia Pérez'},{label:'Flow',film:'Flow (2024 film)'},
+      {label:'The Girl with the Needle',film:'The Girl with the Needle'},{label:'The Seed of the Sacred Fig',film:'The Seed of the Sacred Fig'}
+    ],leftPick:'',rightPick:'',winner:''}
+  ]
+};
+
+const imageCache={};
+const $=id=>document.getElementById(id);
+
+async function wikiThumb(title){
+  if(imageCache[title]) return imageCache[title];
+  try{
+    const u=`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`;
+    const r=await fetch(u);
+    const j=await r.json();
+    const src=j?.thumbnail?.source||IMG_FALLBACK;
+    imageCache[title]=src; return src;
+  }catch{ return IMG_FALLBACK; }
+}
+
+function render(){
+  $('leftName').textContent=state.left.name; $('rightName').textContent=state.right.name;
+  if(state.left.photo) $('leftAvatar').src=state.left.photo;
+  if(state.right.photo) $('rightAvatar').src=state.right.photo;
+
+  $('cats').innerHTML=state.categories.map((c,i)=>{
+    const opts=c.nominees.map(n=>`<option ${c.leftPick===n.label?'selected':''}>${n.label}</option>`).join('');
+    const ropts=c.nominees.map(n=>`<option ${c.rightPick===n.label?'selected':''}>${n.label}</option>`).join('');
+    const chips=c.nominees.map(n=>`<button class="chip ${c.winner===n.label?'active':''}" data-a="win" data-i="${i}" data-v="${esc(n.label)}">${n.label}</button>`).join('');
+    const cards=c.nominees.map((n,idx)=>`<div class="nom"><img id="img-${i}-${idx}" src="${IMG_FALLBACK}"><div class="t">${esc(n.label)}</div></div>`).join('');
+    return `<section class="cat"><h3>${esc(c.title)}</h3>
+      <div class="nominees">${cards}</div>
+      <div class="row"><label>Voto ${esc(state.left.name)}</label><select data-a="lp" data-i="${i}"><option value="">— elegir —</option>${opts}</select></div>
+      <div class="row"><label>Voto ${esc(state.right.name)}</label><select data-a="rp" data-i="${i}"><option value="">— elegir —</option>${ropts}</select></div>
+      <div class="chips">${chips}<button class="chip ${c.winner==='NINGUNO'?'active':''}" data-a="win" data-i="${i}" data-v="NINGUNO">Nadie ganó</button><button class="chip" data-a="clear" data-i="${i}">Limpiar</button></div>
+    </section>`;
+  }).join('');
+
+  bind(); compute(); loadThumbs();
+}
+
+function bind(){
+  document.querySelectorAll('[data-a="lp"]').forEach(e=>e.onchange=ev=>{state.categories[+ev.target.dataset.i].leftPick=ev.target.value;compute();});
+  document.querySelectorAll('[data-a="rp"]').forEach(e=>e.onchange=ev=>{state.categories[+ev.target.dataset.i].rightPick=ev.target.value;compute();});
+  document.querySelectorAll('[data-a="win"]').forEach(e=>e.onclick=ev=>{const c=state.categories[+ev.target.dataset.i];c.winner=ev.target.dataset.v;render();});
+  document.querySelectorAll('[data-a="clear"]').forEach(e=>e.onclick=ev=>{state.categories[+ev.target.dataset.i].winner='';render();});
+}
+
+async function loadThumbs(){
+  for(let i=0;i<state.categories.length;i++){
+    for(let j=0;j<state.categories[i].nominees.length;j++){
+      const n=state.categories[i].nominees[j];
+      const img=$(`img-${i}-${j}`); if(!img) continue;
+      img.src=await wikiThumb(n.film||n.label);
     }
+  }
+}
 
-    function render() {
-      el.leftName.textContent = state.left.name;
-      el.rightName.textContent = state.right.name;
-      if (state.left.photo) el.leftAvatar.src = state.left.photo;
-      if (state.right.photo) el.rightAvatar.src = state.right.photo;
+function compute(){
+  let l=0,r=0,res=0;
+  state.categories.forEach(c=>{if(!c.winner)return;res++; if(c.winner!=='NINGUNO'){if(c.leftPick===c.winner)l++; if(c.rightPick===c.winner)r++;}});
+  $('leftScore').textContent=l; $('rightScore').textContent=r; $('leftWins').textContent=l; $('rightWins').textContent=r;
+  $('legend').textContent=`${res}/${state.categories.length} resueltos`;
+}
 
-      el.categories.innerHTML = state.categories.map((cat, i) => {
-        const options = [''].concat(cat.nominees).map(n => createOption(n, cat.leftPick)).join('');
-        const rightOptions = [''].concat(cat.nominees).map(n => createOption(n, cat.rightPick)).join('');
-        const winnerButtons = cat.nominees.map(n => `
-          <button class="chip ${cat.winner === n ? 'active' : ''}" data-action="winner" data-i="${i}" data-val="${escapeHtmlAttr(n)}">${escapeHtml(n)}</button>
-        `).join('');
+function esc(s=''){return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function photo(input,side){input.onchange=e=>{const f=e.target.files?.[0];if(!f)return;const r=new FileReader();r.onload=()=>{state[side].photo=r.result;render();};r.readAsDataURL(f);};}
+photo($('leftPhoto'),'left'); photo($('rightPhoto'),'right');
+$('leftPanel').ondblclick=()=>{const n=prompt('Nombre izquierda',state.left.name); if(n){state.left.name=n.trim();render();}};
+$('rightPanel').ondblclick=()=>{const n=prompt('Nombre derecha',state.right.name); if(n){state.right.name=n.trim();render();}};
+$('saveBtn').onclick=()=>{localStorage.setItem(STORAGE,JSON.stringify(state));alert('Guardado ✅')};
+$('loadBtn').onclick=()=>{const raw=localStorage.getItem(STORAGE);if(!raw)return alert('Sin guardado');Object.assign(state,JSON.parse(raw));render();};
+$('resetBtn').onclick=()=>{if(confirm('¿Reset?')){localStorage.removeItem(STORAGE);location.reload();}};
 
-        return `
-        <article class="category">
-          <div class="cat-title" contenteditable="true" data-action="title" data-i="${i}">${escapeHtml(cat.title)}</div>
-
-          <div class="row">
-            <label>Voto ${escapeHtml(state.left.name)}</label>
-            <select data-action="leftPick" data-i="${i}">
-              <option value="">— elegir —</option>
-              ${options}
-            </select>
-          </div>
-
-          <div class="row">
-            <label>Voto ${escapeHtml(state.right.name)}</label>
-            <select data-action="rightPick" data-i="${i}">
-              <option value="">— elegir —</option>
-              ${rightOptions}
-            </select>
-          </div>
-
-          <div class="result-line">
-            <div class="legend">Ganador real:</div>
-            <div class="result-buttons">
-              ${winnerButtons}
-              <button class="chip ${cat.winner === 'NINGUNO' ? 'active' : ''}" data-action="winner" data-i="${i}" data-val="NINGUNO">Nadie ganó</button>
-              <button class="chip" data-action="clearWinner" data-i="${i}">Limpiar</button>
-              <button class="chip" data-action="addNominee" data-i="${i}">+ Nominado</button>
-              <button class="chip" data-action="removeCategory" data-i="${i}">🗑 Premio</button>
-            </div>
-          </div>
-        </article>`;
-      }).join('');
-
-      computeScores();
-      wireDynamicEvents();
-    }
-
-    function wireDynamicEvents() {
-      document.querySelectorAll('[data-action="leftPick"]').forEach(sel => {
-        sel.addEventListener('change', e => {
-          const i = +e.target.dataset.i;
-          state.categories[i].leftPick = e.target.value;
-          computeScores();
-        });
-      });
-      document.querySelectorAll('[data-action="rightPick"]').forEach(sel => {
-        sel.addEventListener('change', e => {
-          const i = +e.target.dataset.i;
-          state.categories[i].rightPick = e.target.value;
-          computeScores();
-        });
-      });
-      document.querySelectorAll('[data-action="winner"]').forEach(btn => {
-        btn.addEventListener('click', e => {
-          const i = +e.target.dataset.i;
-          state.categories[i].winner = e.target.dataset.val;
-          render();
-        });
-      });
-      document.querySelectorAll('[data-action="clearWinner"]').forEach(btn => {
-        btn.addEventListener('click', e => {
-          const i = +e.target.dataset.i;
-          state.categories[i].winner = '';
-          render();
-        });
-      });
-      document.querySelectorAll('[data-action="addNominee"]').forEach(btn => {
-        btn.addEventListener('click', e => {
-          const i = +e.target.dataset.i;
-          const name = prompt('Nombre del nuevo nominado:');
-          if (!name) return;
-          if (!state.categories[i].nominees.includes(name)) state.categories[i].nominees.push(name);
-          render();
-        });
-      });
-      document.querySelectorAll('[data-action="removeCategory"]').forEach(btn => {
-        btn.addEventListener('click', e => {
-          const i = +e.target.dataset.i;
-          if (confirm('¿Borrar este premio?')) {
-            state.categories.splice(i, 1);
-            render();
-          }
-        });
-      });
-      document.querySelectorAll('[data-action="title"]').forEach(titleEl => {
-        titleEl.addEventListener('blur', e => {
-          const i = +e.target.dataset.i;
-          const txt = e.target.textContent.trim();
-          state.categories[i].title = txt || `Premio ${i + 1}`;
-        });
-      });
-    }
-
-    function computeScores() {
-      let left = 0, right = 0, resolved = 0;
-      for (const cat of state.categories) {
-        if (!cat.winner) continue;
-        resolved++;
-        if (cat.winner !== 'NINGUNO') {
-          if (cat.leftPick === cat.winner) left++;
-          if (cat.rightPick === cat.winner) right++;
-        }
-      }
-      el.leftScore.textContent = left;
-      el.rightScore.textContent = right;
-      el.leftWins.textContent = left;
-      el.rightWins.textContent = right;
-      const total = state.categories.length;
-      el.statusLegend.textContent = `Resultados marcados: ${resolved}/${total}`;
-    }
-
-    function readImage(file, cb) {
-      const reader = new FileReader();
-      reader.onload = () => cb(reader.result);
-      reader.readAsDataURL(file);
-    }
-
-    function saveLocal() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      alert('Guardado local ✅');
-    }
-
-    function loadLocal() {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return alert('No hay guardado local todavía.');
-      try {
-        const data = JSON.parse(raw);
-        Object.assign(state, data);
-        render();
-        alert('Cargado ✅');
-      } catch {
-        alert('No se pudo cargar.');
-      }
-    }
-
-    function resetAll() {
-      if (!confirm('¿Reset total?')) return;
-      localStorage.removeItem(STORAGE_KEY);
-      location.reload();
-    }
-
-    function escapeHtml(str = '') {
-      return str.replace(/[&<>"']/g, ch => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[ch]));
-    }
-
-    function escapeHtmlAttr(str = '') {
-      return String(str).replace(/"/g, '&quot;');
-    }
-
-    document.getElementById('addCategoryBtn').addEventListener('click', () => {
-      state.categories.push({ title: `Premio ${state.categories.length + 1}`, nominees: ['Nominado A', 'Nominado B'], leftPick: '', rightPick: '', winner: '' });
-      render();
-    });
-    document.getElementById('saveBtn').addEventListener('click', saveLocal);
-    document.getElementById('loadBtn').addEventListener('click', loadLocal);
-    document.getElementById('resetBtn').addEventListener('click', resetAll);
-
-    el.leftPhotoInput.addEventListener('change', e => {
-      const f = e.target.files?.[0];
-      if (!f) return;
-      readImage(f, data => { state.left.photo = data; el.leftAvatar.src = data; });
-    });
-    el.rightPhotoInput.addEventListener('change', e => {
-      const f = e.target.files?.[0];
-      if (!f) return;
-      readImage(f, data => { state.right.photo = data; el.rightAvatar.src = data; });
-    });
-
-    // Editable names by double click
-    document.getElementById('leftPanel').addEventListener('dblclick', () => {
-      const n = prompt('Nombre jugador izquierda:', state.left.name);
-      if (n) { state.left.name = n.trim(); render(); }
-    });
-    document.getElementById('rightPanel').addEventListener('dblclick', () => {
-      const n = prompt('Nombre jugador derecha:', state.right.name);
-      if (n) { state.right.name = n.trim(); render(); }
-    });
-
-    render();
-  </script>
+render();
+</script>
 </body>
 </html>
