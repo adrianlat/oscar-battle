@@ -132,8 +132,44 @@ state.categories.sort((a,b)=>{
   return (ia === -1 ? 999 : ia) - (ib === -1 ? 999 : ib);
 });
 
-function filmTitle(label){return label.includes('—')?label.split('—')[1].trim():label}
-async function thumb(title){if(cache[title])return cache[title];try{const r=await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`);const j=await r.json();return cache[title]=j?.thumbnail?.source||FALL}catch{return FALL}}
+const TITLE_ALIASES = {
+  'Una batalla tras otra': 'One Battle After Another',
+  'El agente secreto': 'The Secret Agent',
+  'Valor sentimental': 'Sentimental Value',
+  'Los pecadores': 'Sinners',
+  'Sueños de trenes': 'Train Dreams',
+  'F1: La película': 'F1 (film)',
+  'Si pudiera, te daría una patada': "If I Had Legs I'd Kick You",
+  'Las guerreras k-pop': 'KPop Demon Hunters',
+  'Zootrópolis 2': 'Zootopia 2',
+  'La hermanastra fea': 'The Ugly Stepsister',
+  'Sirāt': 'Sirat (film)'
+};
+
+function filmTitle(label){
+  let t = label.includes('—') ? label.split('—')[1].trim() : label.trim();
+  t = t.replace(/\s*\([^)]*\)\s*$/,''); // quita (Noruega), etc.
+  return TITLE_ALIASES[t] || t;
+}
+
+async function thumb(title){
+  if(cache[title]) return cache[title];
+  const urls = [
+    `https://es.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`,
+    `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`
+  ];
+  for (const u of urls) {
+    try {
+      const r = await fetch(u);
+      if (!r.ok) continue;
+      const j = await r.json();
+      const src = j?.thumbnail?.source;
+      if (src) { cache[title] = src; return src; }
+    } catch {}
+  }
+  cache[title] = FALL;
+  return FALL;
+}
 
 function render(){
   $('cats').innerHTML=state.categories.map((c,i)=>`<section class='cat'>
